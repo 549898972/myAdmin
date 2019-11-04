@@ -27,5 +27,12 @@ module.exports = {
             {test: /\.vue$/, use: 'vue-loader'},
         ]
     },
-    devtool: 'source-map'
+    resolve: {
+        extensions: ['.js', '.vue', '.json'],
+    },
+    devtool: 'module-cheap-source-map',
+}
+
+function resolve (dir) {
+    return path.join(__dirname, '..', dir)
 }

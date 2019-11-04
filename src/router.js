@@ -7,6 +7,7 @@ var router = new VueRouter({
         {
             path: '/home',
             component: Index,
+            redirect: '/home/dashboard',
             children: [
                 {path: 'dashboard', component: DashBoard},
             ]

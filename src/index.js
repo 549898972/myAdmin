@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import app from './App.vue'
 import router from './router'
+import './public/js/base'
 
 import {
     Button,
@@ -15,7 +16,6 @@ import {
     TableColumn
 } from 'element-ui'
 
-
 import './public/css/base.css'
 import './public/css/patch.css'
 import './public/css/animate.css'
@@ -27,6 +27,10 @@ import 'element-ui/lib/theme-chalk/icon.css'
 import 'element-ui/lib/theme-chalk/date-picker.css'
 import 'element-ui/lib/theme-chalk/table.css'
 import 'element-ui/lib/theme-chalk/table-column.css'
+
+import axios from 'axios'
+window.axios = axios
+
 
 Vue.use(VueRouter)
 

@@ -3,7 +3,30 @@
         <div class="side" @mousedown="changeWidth">
             <div class="side-menu">
                 <div class="nav-side">
-                    <el-menu
+                    <nav-side>
+                        <nav-side-item>
+                            <template v-slot:subItem>
+                                <nav-side-sub-item >
+                                    娃哈哈
+                                </nav-side-sub-item>
+                                <nav-side-sub-item >
+                                    AD钙
+                                </nav-side-sub-item>
+                            </template>
+                        </nav-side-item>
+                        <nav-side-item>
+                            <template v-slot:subItem>
+                                <nav-side-sub-item >
+                                    娃哈哈
+                                </nav-side-sub-item>
+                                <nav-side-sub-item >
+                                    AD钙
+                                </nav-side-sub-item>
+                            </template>
+                        </nav-side-item>
+                    </nav-side>
+
+                    <!--<el-menu
                             default-active="2"
                             @open="handleOpen"
                             @close="handleClose"
@@ -38,7 +61,7 @@
                                 <el-menu-item index="2-6">选项6</el-menu-item>
                             </el-menu-item-group>
                         </el-submenu>
-                    </el-menu>
+                    </el-menu>-->
                 </div>
             </div>
         </div>
@@ -49,9 +72,17 @@
 </template>
 
 <script>
+    import NavSide from '../../components/nav/nav-side/NavSide.vue'
+    import NavSideItem from '../../components/nav/nav-side/NavSideItem.vue'
+    import NavSideSubItem from '../../components/nav/nav-side/NavSideSubItem.vue'
 
     export default {
         name: 'Product',
+        components: {
+            NavSide,
+            NavSideItem,
+            NavSideSubItem
+        },
         data: function () {
             return {
                 time: "",

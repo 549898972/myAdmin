@@ -1,14 +1,11 @@
 <template>
-    <div class="fade-in-button" v-html="value" :style="buttonStyle" @click="click"></div>
+    <div class="fade-in-button" :style="buttonStyle" @click="click"><slot></slot></div>
 </template>
 
 <script>
     export default {
         name: 'FadeInButton',
         props: {
-            value: {
-                type: String
-            },
             buttonStyle: {
                 type: String
             }
