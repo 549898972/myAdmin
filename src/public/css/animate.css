@@ -87,3 +87,11 @@
         opacity: 1;
     }
 }
+
+.animation-main {
+    animation:dashboard .7s ease;
+    -webkit-animation:dashboard .7s ease;
+    -moz-animation:dashboard .7s ease;
+    -ms-animation:dashboard .7s ease;
+    -o-animation:dashboard .7s ease;
+}

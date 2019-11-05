@@ -14,10 +14,11 @@
         },
         methods: {
             click: function () {
-                this.$emit('click')
+                /*this.$emit('click')*/
             }  
         },
         mounted: function () {
+
 
         }
     }
@@ -37,8 +38,6 @@
         background: rgb(57,80,120)!important;
     }
     .nav-side-sub-item-active {
-        color: #ffffff;
-        font-weight: bold;
-        font-size: 15px;
+        color: rgb(70,159,252);
     }
 </style>
