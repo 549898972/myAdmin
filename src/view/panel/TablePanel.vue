@@ -42,7 +42,7 @@
 <style scoped>
     .table-panel {
         width: 100%;
-        padding: 20px 0 0 0;
+        padding: 10px 0 0 0;
     }
 
 </style>

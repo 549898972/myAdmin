@@ -4,25 +4,11 @@
             <div class="side-menu">
                 <div class="nav-side">
                     <nav-side active="1_1">
-                        <nav-side-item>
-                            选项1
+                        <nav-side-item v-for="(item, i) in navSideItem">
+                            <i class="iconfont">&#xe614;</i> {{ item.name }}
                             <template v-slot:subItem>
-                                <nav-side-sub-item>
-                                    娃哈哈
-                                </nav-side-sub-item>
-                                <nav-side-sub-item >
-                                    AD钙
-                                </nav-side-sub-item>
-                            </template>
-                        </nav-side-item>
-                        <nav-side-item>
-                            选项2
-                            <template v-slot:subItem>
-                                <nav-side-sub-item >
-                                    娃哈哈
-                                </nav-side-sub-item>
-                                <nav-side-sub-item >
-                                    AD钙
+                                <nav-side-sub-item v-for="(subItem, j) in item.subItem" link="subItem.link">
+                                    {{ subItem.name }}
                                 </nav-side-sub-item>
                             </template>
                         </nav-side-item>
@@ -51,6 +37,34 @@
         data: function () {
             return {
                 time: "",
+                navSideItem: [
+                    {
+                        name: '一级菜单1',
+                        subItem: [
+                            {
+                                name: '二级菜单1_1',
+                                link: '/home/dashboard/table',
+                            },
+                            {
+                                name: '二级菜单1_2',
+                                link: '/home/dashboard/table',
+                            },
+                        ],
+                    },
+                    {
+                        name: '一级菜单2',
+                        subItem:[
+                            {
+                                name: '二级菜单2_1',
+                                link: '/home/dashboard/table',
+                            },
+                            {
+                                name: '二级菜单2_2',
+                                link: '/home/dashboard/table',
+                            },
+                        ],
+                    },
+                ]
             }
         },
         methods: {
@@ -109,5 +123,9 @@
     }
     .side-menu, .side {
         background-color: rgb(37,55,87)!important;
+    }
+    .iconfont {
+        margin-right: 13px;
+        color: #ffffff;
     }
 </style>

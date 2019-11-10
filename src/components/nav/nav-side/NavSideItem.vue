@@ -67,9 +67,10 @@
         display: flex;
         cursor: pointer;
         transition: background .3s ease;
+        font-size: 15px;
     }
     .nav-side-item > .tag > p {
-        padding: 0 10px 0 30px;
+        padding: 0 10px 0 23px;
         height: 56px;
         flex: 1;
         display: inline-block;
