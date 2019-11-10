@@ -8,13 +8,13 @@
                         维度
                     </form-label>
                     <el-select
-                            v-model="select"
+                            v-model="select.selected"
                             placeholder="请选择"
                             size="small"
                             class="select"
                             slot="input">
                         <el-option
-                                v-for="item in options"
+                                v-for="item in select.options"
                                 :key="item.key"
                                 :label="item.label"
                                 :value="item.key">
@@ -50,19 +50,16 @@
             FadeInButton,
         },
         props: {
-            options: {
-                type: Array,
-            },
-            xAxis: {
-                type: Array,
-            },
-            datas: {
+            table: {
                 type: Object,
             },
         },
         data: function () {
             return {
-                select: '',
+                select: {
+                    selected: '',
+                    options: [],
+                },
                 buttonStyle: 'position: absolute; right:0; bottom: 0',
                 echartType: 'line',
                 echart: {},
@@ -99,7 +96,7 @@
                     xAxis : [
                         {
                             type : 'category',
-                            data : this.xAxis,
+                            data : [],
                             axisTick: {
                                 alignWithLabel: true
                             }
@@ -135,7 +132,7 @@
                                     color: 'rgb(255, 70, 131)'
                                 }])
                             },
-                            data:[]
+                            data: []
                         }
                     ]
                 }
@@ -146,8 +143,38 @@
                 let option = this.getOption(vue,type)
                 vue.echart.setOption(option)
             },
+            transTable2Chart: function (vue) {
+                let dimension = vue.table.dimension
+                let xAxis = []
+                let data = {}
+                let options = []
+                Array.prototype.forEach.call(vue.table.cols, function (col) {
+                    if(!col.hasOwnProperty('date')) {
+                        options.push(col)
+                    }
+                }, false)
+                Array.prototype.forEach.call(vue.table.rows, function (row) {
+                    for(let key in row) {
+                        if(key === 'date') {
+                            xAxis.push(row['date'])
+                        } else {
+                            let item = data[key] || []
+                            item.push(row[key])
+                            data[key] = item
+                        }
+                    }
+                }, false)
+
+                console.log(vue.table)
+                if(!vue.select.selected) {
+                    vue.select.selected = options[0].key
+                }
+
+                vue.select.options = options
+                vue.option.xAxis.data = xAxis
+                vue.option.series[0].data = data[vue.select.selected]
+            },
             getOption: function (vue,type) {
-                vue.option.series[0].data = vue.datas[vue.select]
                 switch(type) {
                     case 'line':
                         vue.option.tooltip.axisPointer.type = 'line'
@@ -173,10 +200,11 @@
         },
         mounted: function () {
             let vue = this
+            vue.$options.methods.transTable2Chart(vue);
             // 基于准备好的dom，初始化echarts实例
             vue.echart = echarts.init(document.querySelector('.echart'));
             //多选框初始化
-            vue.select = Object.keys(vue.datas)[0]
+            vue.select.selected = Object.keys(vue.datas.data)[0]
             // 绘制图表
             vue.$options.methods.init(vue, 'line');
 

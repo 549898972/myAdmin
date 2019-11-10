@@ -16,9 +16,7 @@
                 </slide-button>
             </slide-button-group>
             <transition keep-alive mode="out-in">
-                <router-view v-if="show === 'table'" :cols="table.cols" :rows="table.rows"></router-view>
-                <router-view v-if="show === 'chart'" :xAxis="chart.xAxis" :datas="chart.data" :options="chart.options"></router-view>
-                <router-view v-if="show === 'config'" :cols="table.cols" :rows="table.rows"></router-view>
+                <router-view v-if="loading" :table="table"></router-view>
             </transition>
         </div>
     </div>
@@ -33,36 +31,26 @@
         name: 'DashBoard',
         data: function () {
             return {
-                show: 'table',
+                loading: 'table',
                 table: {
                     cols: [],
                     rows: [],
-                },
-                chart: {
-                    xAxis: [],
-                    data: {},
-                    options: [],
-                },
-                config: {
-
+                    dimension: ['date','eid'],
                 },
                 buttonStyle: 'position: absolute; right:0; bottom: 0',
             }
         },
         methods: {
             clickTable: function() {
-                this.show = 'table'
                 this.$router.push({
                     path:'/home/dashboard/table',
                     query:{
-                        id:this.id ,
+                        id: this.id,
                     }
                 })
 
             },
             clickChart: function () {
-                this.show = 'chart'
-                this.$options.methods.tranTableToChart(this)
                 this.$router.push({
                     path:'/home/dashboard/chart',
                     query:{
@@ -71,34 +59,13 @@
                 })
             },
             clickConfig: function () {
-                this.show = 'config'
                 this.$router.push({
                     path:'/home/dashboard/config',
                     query:{
                         id:this.id ,
                     }
                 })
-
             },
-            tranTableToChart: function (vue) {
-
-                let xAxis = []
-                let data = {}
-                Array.prototype.forEach.call(vue.table.rows, function (row, index) {
-                    for(let key in row) {
-                        if(key === 'date') {
-                            xAxis.push(row['date'])
-                        } else {
-                            let item = data[key] || []
-                            item.push(row[key])
-                            data[key] = item
-                        }
-                    }
-                }, false)
-                vue.chart.xAxis = xAxis
-                vue.chart.data = data
-                vue.chart.options = vue.table.cols
-            }
         },
         components: {
             SlideButtonGroup,
@@ -111,10 +78,9 @@
         mounted: function () {
             var that=this
             axios.get('./data.json').then(function(response) {
-
                 that.table.cols = response.data.cols
                 that.table.rows = response.data.rows
-                that.show = 'table'
+                that.show = true
             })
         }
     }

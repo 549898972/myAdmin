@@ -7,13 +7,13 @@
             </fade-in-button>
         </div>
         <el-table
-                :data="rows"
+                :data="table.rows"
                 stripe
                 border
                 size="mini"
                 style="width: 100%">
             <el-table-column
-                    v-for="col in cols"
+                    v-for="col in table.cols"
                     :prop="col.key"
                     :label="col.label"
                     min-width="100"
@@ -33,11 +33,8 @@
             FadeInButton,
         },
         props: {
-            cols: {
-                type: Array,
-            },
-            rows: {
-                type: Array,
+            table: {
+                type: Object,
             },
         },
         data: function() {
