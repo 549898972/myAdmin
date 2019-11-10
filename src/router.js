@@ -3,6 +3,7 @@ import Index from './view/product/index.vue'
 import DashBoard from './view/product/DashBoard.vue'
 import TablePanel from './view/panel/TablePanel.vue'
 import ChartPanel from './view/panel/ChartPanel.vue'
+import ConfigPanel from './view/panel/ConfigPanel.vue'
 
 var router = new VueRouter({
     routes:[
@@ -22,6 +23,10 @@ var router = new VueRouter({
                         {
                             path: 'chart',
                             component: ChartPanel,
+                        },
+                        {
+                            path: 'config',
+                            component: ConfigPanel,
                         }
                     ]
                 },

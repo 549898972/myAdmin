@@ -12,6 +12,7 @@ import {
     Option,
     Input,
     Button,
+    Radio,
 } from 'element-ui'
 
 import './public/css/base.css'
@@ -25,6 +26,7 @@ import 'element-ui/lib/theme-chalk/select.css'
 import 'element-ui/lib/theme-chalk/option.css'
 import 'element-ui/lib/theme-chalk/input.css'
 import 'element-ui/lib/theme-chalk/button.css'
+import 'element-ui/lib/theme-chalk/radio.css'
 
 import axios from 'axios'
 window.axios = axios
@@ -38,6 +40,7 @@ Vue.use(Select)
 Vue.use(Option)
 Vue.use(Input)
 Vue.use(Button)
+Vue.use(Radio)
 
 var vm = new Vue({
     el: '#app',

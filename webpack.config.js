@@ -30,7 +30,7 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.vue', '.json'],
     },
-    devtool: 'module-cheap-source-map',
+    devtool: 'source-map',
 }
 
 function resolve (dir) {

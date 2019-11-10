@@ -48,7 +48,7 @@
         name: 'DatepickerPanel',
         data: function () {
             return {
-                date: '',
+                date: ["20191101","20191110"],
                 column: {
                     cities: [{
                         value: 'Beijing',
@@ -77,7 +77,7 @@
         },
         methods: {
             change: function () {
-                this.$emit('change', this.value1)
+                console.log(this.date)
             }
         }
     }
