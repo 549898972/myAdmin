@@ -166,6 +166,8 @@
                 }, false)
 
                 console.log(vue.table)
+                console.log(vue.table.cols)
+
                 if(!vue.select.selected) {
                     vue.select.selected = options[0].key
                 }
