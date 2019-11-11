@@ -1,10 +1,10 @@
 <template>
     <div class="option-panel">
-        <div class="date clearfix">
-            <div class="label">
+        <form-label-group>
+            <form-label slot="label">
                 日期
-            </div>
-            <div class="datepicker">
+            </form-label>
+            <div slot="input">
                 <el-date-picker
                         size="small"
                         v-model="date"
@@ -16,12 +16,12 @@
                         end-placeholder="结束日期">
                 </el-date-picker>
             </div>
-        </div>
+        </form-label-group>
         <div class="column-search clearfix">
             <div class="label">
                 搜索
             </div>
-            <div>
+            <div class="select">
                 <el-select
                         v-model="column.value"
                         clearable
@@ -35,6 +35,8 @@
                             :value="item.value">
                     </el-option>
                 </el-select>
+            </div>
+            <div class="search">
                 <el-input placeholder="搜索关键词" v-model="column.keyword" class="input" size="small">
                     <el-button slot="append" icon="el-icon-search"></el-button>
                 </el-input>
@@ -44,8 +46,15 @@
 </template>
 
 <script>
+    import FormLabel from '../../components/word/form-label/FormLabel.vue'
+    import FormLabelGroup from '../../components/word/form-label/FormLabelGroup.vue'
+
     export default {
         name: 'DatepickerPanel',
+        components: {
+            FormLabel,
+            FormLabelGroup,
+        },
         data: function () {
             return {
                 date: ["20191101","20191110"],
@@ -90,7 +99,7 @@
     .option-panel > div{
         margin-bottom: 20px;
     }
-    .label,.datepicker {
+    .label,.select,.search {
         float: left;
     }
     .label {

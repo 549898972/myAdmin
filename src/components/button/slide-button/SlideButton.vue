@@ -1,13 +1,16 @@
 <template>
-    <div class="slide-button" @click="click"><p><slot>按钮</slot></p></div>
+    <div class="slide-button" :link="link" @click="click"><p><slot>按钮</slot></p></div>
 </template>
 
 <script>
     export default {
         name: 'SlideButton',
+        props: {
+            link: String
+        },
         methods: {
             click: function() {
-                this.$emit('click')
+                this.$emit('click', this.link)
             }
         },
         mounted: function () {

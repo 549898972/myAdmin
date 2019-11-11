@@ -4,14 +4,14 @@
             <p>安卓新日志-激活-分版本</p>
         </div>
         <div class="main-panel">
-            <slide-button-group active="1">
-                <slide-button @click="clickTable">
+            <slide-button-group :active="slideActive">
+                <slide-button @click="click" link="/home/dashboard/table">
                     <p><span class="iconfont">&#xe64c;</span> &nbsp;报表</p>
                 </slide-button>
-                <slide-button @click="clickChart">
+                <slide-button @click="click" link="/home/dashboard/chart">
                     <p><span class="iconfont">&#xe609;</span> &nbsp;图表</p>
                 </slide-button>
-                <slide-button @click="clickConfig">
+                <slide-button @click="click" link="/home/dashboard/config">
                     <p><span class="iconfont">&#xe64d;</span> &nbsp;配置</p>
                 </slide-button>
             </slide-button-group>
@@ -27,6 +27,9 @@
     import SlideButtonGroup from '../../components/button/slide-button/SlideButtonGroup.vue'
     import SlideButton from '../../components/button/slide-button/SlideButton.vue'
     import TablePanel from '../panel/TablePanel.vue'
+
+    let vue
+
     export default {
         name: 'DashBoard',
         data: function () {
@@ -38,31 +41,15 @@
                     dimension: ['date','eid'],
                 },
                 buttonStyle: 'position: absolute; right:0; bottom: 0',
+                slideActive: 0,
             }
         },
         methods: {
-            clickTable: function() {
+            click: function(link) {
                 this.$router.push({
-                    path:'/home/dashboard/table',
+                    path:link,
                     query:{
                         id: this.id,
-                    }
-                })
-
-            },
-            clickChart: function () {
-                this.$router.push({
-                    path:'/home/dashboard/chart',
-                    query:{
-                        id:this.id ,
-                    }
-                })
-            },
-            clickConfig: function () {
-                this.$router.push({
-                    path:'/home/dashboard/config',
-                    query:{
-                        id:this.id ,
                     }
                 })
             },
@@ -73,15 +60,25 @@
             TablePanel,
         },
         created: function () {
-
-        },
-        mounted: function () {
             var that=this
             axios.get('./data.json').then(function(response) {
                 that.table.cols = response.data.cols
                 that.table.rows = response.data.rows
+                that.table.test = '123414'
                 that.show = true
             })
+        },
+        mounted: function () {
+            vue = this
+            let currentLink = vue.$router.history.current.path
+            let slideButtons = vue.$el.querySelectorAll('.slide-button')
+            Array.prototype.forEach.call(slideButtons, function (button, index) {
+                let link = button.getAttribute("link")
+                if(link === currentLink) {
+                    vue.slideActive = index + 1
+                }
+                return false
+            }, false)
         }
     }
 </script>

@@ -7,3 +7,9 @@ html,body{
     user-select: none;
     -ms-user-select: none;
 }
+.el-table__header{
+    width: 100% !important;
+}
+.el-table__body{
+    width: 100% !important;
+}

@@ -6,27 +6,29 @@
 </template>
 
 <script>
+    let vue
+    let methods
     export default {
         name: 'SlideButtonGroup',
         props: {
             active: {
-                type: String,
-                default: "1",
+                type: Number,
+                default: 1,
             },
         },
         methods: {
-            init: function (vue,slideButtonGroup) {
+            init: function () {
+                let slideButtonGroup = vue.$el
                 let firstButton = slideButtonGroup.querySelector('.slide-button')
                 let lastButton = slideButtonGroup.querySelector('div.slide-button:last-child')
                 let slider = slideButtonGroup.querySelector('.slider')
-                let buttons = slideButtonGroup.querySelectorAll('.slide-button')
+
                 firstButton.classList.add('slide-button-active','slide-button-first')
                 lastButton.classList.add('slide-button-last')
                 slider.classList.add('slide-button-first')
-                let activeButton = buttons.item(vue.active - 1)
-                vue.$options.methods.setActive(slideButtonGroup, activeButton, vue.active - 1)
             },
-            setActive: function (slideButtonGroup, button, index) {
+            setActive: function (button, index) {
+                let slideButtonGroup = vue.$el
                 let offsetLeft = button.offsetLeft
                 let slider = slideButtonGroup.querySelector('.slider')
                 let buttons = slideButtonGroup.querySelectorAll('.slide-button')
@@ -47,17 +49,25 @@
             },
         },
         mounted: function () {
-            let vue = this
-            let slideButtonGroup = this.$el
-            vue.$options.methods.init(vue, slideButtonGroup)
+            vue = this
+            methods = this.$options.methods
+            methods.init()
 
+            let slideButtonGroup = this.$el
             let buttons = slideButtonGroup.querySelectorAll('.slide-button')
+
             Array.prototype.forEach.call(buttons, function(button, index) {
                 button.addEventListener('click', function () {
-                    vue.$options.methods.setActive(slideButtonGroup, button, index)
+                    methods.setActive(button, index)
                 }, false)
             })
 
+        },
+        watch: {
+            active: function (newVal) {
+                let button = vue.$el.querySelectorAll('.slide-button').item(newVal - 1)
+                methods.setActive(button, newVal - 1)
+            }
         }
     }
 </script>

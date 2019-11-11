@@ -12,7 +12,8 @@
                             placeholder="请选择"
                             size="small"
                             class="select"
-                            slot="input">
+                            slot="input"
+                            @change="selectChange">
                         <el-option
                                 v-for="item in select.options"
                                 :key="item.key"
@@ -36,10 +37,14 @@
 
 <script>
     import FormLabel from '../../components/word/form-label/FormLabel.vue'
-    import FormLabelGroup from '../../components/word/form-label/FromLabelGroup.vue'
+    import FormLabelGroup from '../../components/word/form-label/FormLabelGroup.vue'
     import OptionPanel from '../panel/OptionPanel.vue'
     import FadeInButton from '../../components/button/fade-in-button/FadeInButton.vue'
-    var echarts = require('echarts');
+    import DataUtil from '../../public/js/util'
+
+    let echarts = require('echarts')
+    let vue
+    let methods
 
     export default {
         name: 'ChartPanel',
@@ -52,6 +57,7 @@
         props: {
             table: {
                 type: Object,
+                default: {},
             },
         },
         data: function () {
@@ -139,21 +145,26 @@
             }
         },
         methods: {
-            init: function (vue,type) {
-                let option = this.getOption(vue,type)
+            init: function (type) {
+                //接受参数是以表格的形式，需要转换成图表要求的参数形式
+                methods.transTable2Chart(vue.table)
+                // 基于准备好的dom，初始化echarts实例
+                vue.echart = echarts.init(document.querySelector('.echart'))
+                //准备Echarts需要的option参数
+                let option = this.getOption(type)
+                //生成图表
                 vue.echart.setOption(option)
             },
-            transTable2Chart: function (vue) {
-                let dimension = vue.table.dimension
+            transTable2Chart: function (table) {
                 let xAxis = []
                 let data = {}
                 let options = []
-                Array.prototype.forEach.call(vue.table.cols, function (col) {
-                    if(!col.hasOwnProperty('date')) {
+                Array.prototype.forEach.call(table.cols, function (col) {
+                    if(col.key !== 'date') {
                         options.push(col)
                     }
                 }, false)
-                Array.prototype.forEach.call(vue.table.rows, function (row) {
+                Array.prototype.forEach.call(table.rows, function (row) {
                     for(let key in row) {
                         if(key === 'date') {
                             xAxis.push(row['date'])
@@ -165,18 +176,15 @@
                     }
                 }, false)
 
-                console.log(vue.table)
-                console.log(vue.table.cols)
-
                 if(!vue.select.selected) {
                     vue.select.selected = options[0].key
                 }
 
                 vue.select.options = options
-                vue.option.xAxis.data = xAxis
+                vue.option.xAxis[0].data = xAxis
                 vue.option.series[0].data = data[vue.select.selected]
             },
-            getOption: function (vue,type) {
+            getOption: function (type) {
                 switch(type) {
                     case 'line':
                         vue.option.tooltip.axisPointer.type = 'line'
@@ -193,23 +201,28 @@
             clickDownload: function () {
                 console.log(222)
             },
+            selectChange: function (selected) {
+                vue.select.selected = selected
+                methods.init(vue.echartType)
+            }
         },
         watch: {
             echartType: function () {
-                let vue = this
-                vue.$options.methods.init(vue, vue.echartType);
+                methods.init(vue.echartType);
+            },
+            table: {
+                handler: function () {
+                    methods.init('line')
+                },
+                deep: true,
             },
         },
         mounted: function () {
-            let vue = this
-            vue.$options.methods.transTable2Chart(vue);
-            // 基于准备好的dom，初始化echarts实例
-            vue.echart = echarts.init(document.querySelector('.echart'));
-            //多选框初始化
-            vue.select.selected = Object.keys(vue.datas.data)[0]
-            // 绘制图表
-            vue.$options.methods.init(vue, 'line');
-
+            vue = this
+            methods = this.$options.methods
+            if(DataUtil.isValidArray(vue.table.cols)) {
+                methods.init('line')
+            }
         },
     }
 </script>
