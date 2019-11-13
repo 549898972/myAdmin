@@ -164,9 +164,10 @@
             this.$store.commit('setHeaderActive', 1)
 
             let products = document.querySelectorAll('.product')
-            products.forEach(function (product) {
+            Array.prototype.forEach.call(products, function (product) {
                 product.addEventListener('click', methods.clickProduct)
-            })
+                console.log(product.addEventListener)
+            }, false)
         }
     }
 </script>

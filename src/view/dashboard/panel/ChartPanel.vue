@@ -211,9 +211,10 @@
 
                     //拷贝row，并移除其中的维度
                     let trimedRow = Object.assign({}, row)
-                    for(let dimensionKey of dimension) {
+
+                    dimension.forEach(function (dimensionKey) {
                         delete trimedRow[dimensionKey]
-                    }
+                    })
 
                     if(!aggregate[xValue]) {
                         aggregate[xValue] = trimedRow
@@ -293,6 +294,9 @@
 </script>
 
 <style scoped>
+    .chart-panel {
+        margin-bottom: 200px;
+    }
     .echart {
         min-height: 600px;
         margin: 0 50px 30px 30px;

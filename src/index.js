@@ -57,7 +57,9 @@ Vue.use(FormItem)
 
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
-    return originalPush.call(this, location).catch(err => err)
+    return originalPush.call(this, location).catch(function(err){
+        return err
+    })
 }
 
 var vm = new Vue({

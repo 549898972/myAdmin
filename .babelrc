@@ -1,16 +1,18 @@
 {
   "presets": [
+    ['@babel/preset-env'],
     ["env","stage-0"],
     ["es2015", { "modules": false }]
   ],
   "plugins": [
-    ["transform-runtime"],
+    ['@babel/plugin-transform-tuntime'],
     [
       "component",
       {
         "libraryName": "element-ui",
         "styleLibraryName": "theme-chalk"
       }
-    ]
+    ],
+
   ]
 }

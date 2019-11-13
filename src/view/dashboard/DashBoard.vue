@@ -105,6 +105,7 @@
         flex-direction: column;
         flex: 1;
         overflow: auto;
+        min-height: 1200px;
     }
     .main-header {
         margin-bottom: 10px;
