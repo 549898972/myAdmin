@@ -26,7 +26,7 @@
 
     import SlideButtonGroup from '../../components/button/slide-button/SlideButtonGroup.vue'
     import SlideButton from '../../components/button/slide-button/SlideButton.vue'
-    import TablePanel from '../panel/TablePanel.vue'
+    import TablePanel from '../dashboard/panel/TablePanel.vue'
 
     let vue
 
@@ -64,7 +64,6 @@
             axios.get('./data.json').then(function(response) {
                 that.table.cols = response.data.cols
                 that.table.rows = response.data.rows
-                that.table.test = '123414'
                 that.show = true
             })
         },
@@ -79,6 +78,22 @@
                 }
                 return false
             }, false)
+        },
+        watch: {
+            $route: {
+                handler: function(val){
+                    let currentLink = val.path
+                    let slideButtons = vue.$el.querySelectorAll('.slide-button')
+                    Array.prototype.forEach.call(slideButtons, function (button, index) {
+                        let link = button.getAttribute("link")
+                        if(link === currentLink) {
+                            vue.slideActive = index + 1
+                        }
+                        return false
+                    }, false)
+                },
+                deep: true,
+            }
         }
     }
 </script>

@@ -7,7 +7,7 @@
                         <nav-side-item v-for="(item, i) in navSideItem">
                             <i class="iconfont">&#xe614;</i> {{ item.name }}
                             <template v-slot:subItem>
-                                <nav-side-sub-item v-for="(subItem, j) in item.subItem" link="subItem.link">
+                                <nav-side-sub-item v-for="(subItem, j) in item.subItem" :link="subItem.link" @click="clickNavItem">
                                     {{ subItem.name }}
                                 </nav-side-sub-item>
                             </template>
@@ -43,11 +43,11 @@
                         subItem: [
                             {
                                 name: '二级菜单1_1',
-                                link: '/home/dashboard/table',
+                                link: '/home/dashboard/table?id=1_1',
                             },
                             {
                                 name: '二级菜单1_2',
-                                link: '/home/dashboard/table',
+                                link: '/home/dashboard/table?id=1_2',
                             },
                         ],
                     },
@@ -56,11 +56,11 @@
                         subItem:[
                             {
                                 name: '二级菜单2_1',
-                                link: '/home/dashboard/table',
+                                link: '/home/dashboard/table?id=2_1',
                             },
                             {
                                 name: '二级菜单2_2',
-                                link: '/home/dashboard/table',
+                                link: '/home/dashboard/table?id=2_2',
                             },
                         ],
                     },
@@ -93,12 +93,15 @@
                     document.removeEventListener('mousemove', mousemove)
                 }, false)
             },
-            handleOpen: function(key, keyPath) {
-
+            clickNavItem: function (link) {
+                this.$router.push({
+                    path:link,
+                })
             },
-            handleClose: function(key, keyPath) {
-
-            }
+        },
+        mounted: function () {
+            //设置菜单
+            this.$store.commit('setHeaderActive', 2)
         },
     }
 

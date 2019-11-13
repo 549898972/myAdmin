@@ -29,10 +29,10 @@
                         size="small"
                         class="select">
                     <el-option
-                            v-for="item in column.cities"
+                            v-for="item in column.cols"
                             :key="item.value"
                             :label="item.label"
-                            :value="item.value">
+                            :value="item.key">
                     </el-option>
                 </el-select>
             </div>
@@ -46,8 +46,8 @@
 </template>
 
 <script>
-    import FormLabel from '../../components/word/form-label/FormLabel.vue'
-    import FormLabelGroup from '../../components/word/form-label/FormLabelGroup.vue'
+    import FormLabel from '../../../components/word/form-label/FormLabel.vue'
+    import FormLabelGroup from '../../../components/word/form-label/FormLabelGroup.vue'
 
     export default {
         name: 'DatepickerPanel',
@@ -55,29 +55,14 @@
             FormLabel,
             FormLabelGroup,
         },
+        props: {
+            cols: Array
+        },
         data: function () {
             return {
                 date: ["20191101","20191110"],
                 column: {
-                    cities: [{
-                        value: 'Beijing',
-                        label: '北京'
-                    }, {
-                        value: 'Shanghai',
-                        label: '上海'
-                    }, {
-                        value: 'Nanjing',
-                        label: '南京'
-                    }, {
-                        value: 'Chengdu',
-                        label: '成都'
-                    }, {
-                        value: 'Shenzhen',
-                        label: '深圳'
-                    }, {
-                        value: 'Guangzhou',
-                        label: '广州'
-                    }],
+                    cols: [],
                     select: '',
                     value: '',
                     keyword: '',
@@ -87,6 +72,15 @@
         methods: {
             change: function () {
                 console.log(this.date)
+            }
+        },
+        watch: {
+            cols: {
+                handler: function (newVal) {
+                    this.column.cols = newVal
+                },
+                deep: true,
+                immediate: true,
             }
         }
     }

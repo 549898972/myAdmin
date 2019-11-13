@@ -13,3 +13,9 @@ html,body{
 .el-table__body{
     width: 100% !important;
 }
+.chart-panel .form-label-group {
+    margin: 20px 0;
+}
+.business-line .el-dialog {
+    min-width: 600px;
+}

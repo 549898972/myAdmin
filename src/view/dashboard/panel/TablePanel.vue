@@ -1,7 +1,7 @@
 <template>
     <div class="table-panel">
         <div class="span-group">
-            <option-panel></option-panel>
+            <option-panel :cols="table.cols"></option-panel>
             <fade-in-button :buttonStyle="buttonStyle" @click="clickDownload">
                 <i class="iconfont" style="font-size: 20px; vertical-align: middle">&#xe635;</i>&nbsp;下载报表
             </fade-in-button>
@@ -20,12 +20,19 @@
                     resizable>
             </el-table-column>
         </el-table>
+        <div class="page">
+            <el-pagination
+                    background
+                    layout="prev, pager, next"
+                    :total="1000">
+            </el-pagination>
+        </div>
     </div>
 </template>
 
 <script>
-    import OptionPanel from '../panel/OptionPanel.vue'
-    import FadeInButton from '../../components/button/fade-in-button/FadeInButton.vue'
+    import OptionPanel from './OptionPanel.vue'
+    import FadeInButton from '../../../components/button/fade-in-button/FadeInButton.vue'
     export default {
         name: 'TablePanel',
         components: {
@@ -64,5 +71,10 @@
     }
     .span-group {
         position: relative;
+    }
+    .page {
+        margin-top: 20px ;
+        margin-bottom: 30px;
+        float: right;
     }
 </style>

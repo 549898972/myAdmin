@@ -12,18 +12,39 @@
 </template>
 
 <script>
+    let vue
+    let methods
     export default {
         name: 'NavHeader',
         methods: {
-            handleSelect: function (key, keyPath) {
+            setActive: function (index) {
+                let navHeader = vue.$el
+                let liList = navHeader.querySelectorAll('.nav-header-items li')
+                let slider = navHeader.querySelector('.nav-header-slider')
+                let li = liList.item(index)
+                Array.prototype.forEach.call(liList, function (o) {
+                    o.classList.remove('nav-header-active')
+                })
+                slider.style.transition = 'all .3s ease'
+                slider.style.width = li.offsetWidth
+                slider.style.left = li.offsetLeft+'px'
+                li.classList.add('nav-header-active')
+            }
 
-            },
+        },
+        props: {
+            active: {
+                type: Number,
+                default: 1,
+            }
         },
         mounted: function () {
-            let that = this
+            vue = this
+            methods = vue.$options.methods
             let navHeader = this.$el
             let liList = navHeader.querySelectorAll('.nav-header-items li')
             let slider = navHeader.querySelector('.nav-header-slider')
+            methods.setActive(vue.active - 1)
 
             Array.prototype.forEach.call(liList, function (li, index) {
                 if(index === 0) {
@@ -31,17 +52,19 @@
                     slider.style.left = li.offsetLeft+'px'
                 }
                 li.addEventListener('click', function () {
-                    Array.prototype.forEach.call(liList, function (o, i) {
-                        o.classList.remove('nav-header-active')
-                    })
-                    slider.style.transition = 'all .3s ease'
-                    slider.style.width = li.offsetWidth
-                    slider.style.left = li.offsetLeft+'px'
-                    li.classList.add('nav-header-active')
+                    methods.setActive(index)
                     let link = li.getAttribute('link')
-                    that.$router.push({ path: link })
+                    vue.$router.push({ path: link })
                 }, false)
             })
+        },
+        watch: {
+            active: {
+                handler: function(val){
+                    methods.setActive(val-1)
+                },
+                deep: true,
+            }
         }
     }
 
@@ -72,6 +95,7 @@
         float: left;
         height: 100%;
         padding: 0 25px;
+        width: 110px;
         text-align: center;
         line-height: 60px;
         color: rgb(160,203,208);

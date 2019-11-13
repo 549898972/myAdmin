@@ -1,9 +1,9 @@
 <template>
     <div class="container">
-        <nav-header>
+        <nav-header :active="active">
             <ul class="nav-header-items">
-                <li class="nav-header-active" link="/home">报表展现</li>
-                <li link="/">后台配置</li>
+                <li link="/businessline">业务线</li>
+                <li link="/home">报表展现</li>
             </ul>
         </nav-header>
         <transition keep-alive mode="out-in">
@@ -14,6 +14,7 @@
 
 <script>
     import NavHeader from './components/nav/nav-header/NavHeader.vue'
+    let vue
     export default {
         name: 'app',
         components: {
@@ -21,7 +22,13 @@
         },
         data: function () {
             return {
-                time: "",
+                time: '',
+                active: 1,
+            }
+        },
+        computed: {
+            headerActive: function () {
+                return this.$store.state.headerActive
             }
         },
         methods: {
@@ -30,7 +37,23 @@
             },
         },
         mounted: function () {
+            vue = this
 
+            let matchedPaths = vue.$route.matched.map(function (route) {
+                return route.path
+            })
+            let navHeaderItems = document.querySelectorAll('.nav-header-items li')
+            navHeaderItems.forEach(function (item, index) {
+                if(matchedPaths.includes(item.getAttribute('link'))) {
+                    vue.$store.commit('setHeaderActive', index+1)
+                }
+            })
+        },
+        watch: {
+            headerActive: function (val) {
+                this.active = val
+                console.log('change')
+            }
         }
     }
 
