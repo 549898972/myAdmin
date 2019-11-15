@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server --port 8090 --hot --host 10.129.233.46"
+    "dev": "webpack-dev-server --port 8090 --hot --host 127.0.0.1 --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +17,7 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1",
+    "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.2.0",
     "echarts": "^4.4.0",
     "element-ui": "^2.12.0",
@@ -35,7 +36,8 @@
     "vue-template-compiler": "^2.6.10",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9",
-    "webpack-dev-server": "^3.9.0"
+    "webpack-dev-server": "^3.9.0",
+    "webpack-merge": "^4.2.2"
   },
   "dependencies": {
     "vuex": "^3.1.1"
