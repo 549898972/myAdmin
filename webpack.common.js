@@ -20,7 +20,12 @@ module.exports = {
       {test: /\.(less|css)$/, use: ['style-loader', 'css-loader', 'less-loader']},
       {test: /\.(jpg|png|gif|bmp|jpeg)$/, use: ['url-loader?limit=20&name=[hash:8]-[name].[ext]']},
       {test: /\.(ttf|eot|svg|woff|woff2)$/, use: 'url-loader'},
-      {test: /\.js&/, use: ['babel-loader'], exclude:/node_modules/ },
+      {test: /\.js$/, use: {
+        loader:'babel-loader',
+        options: {
+          presets: ['env', { modules: false }]
+        },
+      }, exclude:/node_modules/ },
       {test: /\.vue$/, use: 'vue-loader'},
     ]
   },
