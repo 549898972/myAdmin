@@ -120,6 +120,12 @@
             <div class="dialog-wrapper">
                 <form-label-group>
                     <form-label slot="label">
+                        名 称
+                    </form-label>
+                    <div slot="input" style="margin-left: 38px;"><el-input v-model="type.add.name" size="small"></el-input></div>
+                </form-label-group>
+                <form-label-group>
+                    <form-label slot="label">
                         所属业务线
                     </form-label>
                     <el-select
@@ -136,12 +142,6 @@
                         </el-option>
                     </el-select>
                 </form-label-group>
-                <form-label-group>
-                    <form-label slot="label">
-                        名称
-                    </form-label>
-                    <div slot="input"><el-input v-model="type.add.name" size="small"></el-input></div>
-                </form-label-group>
             </div>
 
             <span slot="footer" class="dialog-footer">
@@ -157,9 +157,9 @@
             <div class="dialog-wrapper">
                 <form-label-group>
                     <form-label slot="label">
-                        名称
+                        名 称
                     </form-label>
-                    <div slot="input"><el-input v-model="dashboard.add.name" size="small"></el-input></div>
+                    <div slot="input" style="margin-left: 38px;"><el-input v-model="dashboard.add.name" size="small"></el-input></div>
                 </form-label-group>
                 <form-label-group>
                     <form-label slot="label">
@@ -187,7 +187,7 @@
                 </form-label-group>
                 <form-label-group>
                     <form-label slot="label">
-                        所属分类
+                        所属分类&nbsp;&nbsp;&nbsp;
                     </form-label>
                     <el-select
                             v-model="dashboard.add.type.selected"
