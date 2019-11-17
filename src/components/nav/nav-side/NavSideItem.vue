@@ -1,6 +1,6 @@
 <template>
     <div class="nav-side-item">
-        <div class="tag" @click="click"><p><slot>选项1</slot></p><i class="iconfont arrow-rotate">&#xe632;</i></div>
+        <div class="tag" @click="click"><p><slot>选项1</slot></p><i class="iconfont arrow arrow-rotate">&#xe632;</i></div>
         <div class="collapse">
             <div class="slider" ></div>
             <slot name="subItem"></slot>
@@ -25,7 +25,7 @@
             },
             openNavSideItem: function (vue, navSideItem) {
                 let subItem = navSideItem.querySelectorAll('.nav-side-sub-item')
-                let arrow = navSideItem.querySelector('.iconfont')
+                let arrow = navSideItem.querySelector('.arrow')
                 if(subItem.length === 0)
                     return
                 let subItemHeight = subItem.item(0).offsetHeight;
