@@ -17,7 +17,6 @@ module.exports = {
   },
   module: {
     rules: [
-      {test: /\.(less|css)$/, use: ['style-loader', 'css-loader', 'less-loader']},
       {test: /\.(jpg|png|gif|bmp|jpeg)$/, use: ['url-loader?limit=20&name=[hash:8]-[name].[ext]']},
       {test: /\.(ttf|eot|svg|woff|woff2)$/, use: 'url-loader'},
       {test: /\.js$/, use: 'babel-loader', exclude:/node_modules/ },
@@ -32,24 +31,12 @@ module.exports = {
   optimization: {
     splitChunks: {
       chunks: "all",   //只对异步代码分割，如果改为all，也会对同步的代码进行分割，但还需要cacheGroups的vendors配置的配合
-      minSize: 30000,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
-      automaticNameDelimiter: '~',
-      name: true,
-      cacheGroups: {
-        vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10,
-          filename: 'vendors.js'   //将所有从node_modules引入的第三方库打包到vendors.js文件下
-        },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true
-        }
-      }
+    },
+    runtimeChunk: {
+      name: 'runtime'  //每次打包如果内容发生了变化，hash值才变化
     }
+  },
+  output: {
+    path: path.resolve(__dirname, './dist')
   }
 }
