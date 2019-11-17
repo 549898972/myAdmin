@@ -1,7 +1,9 @@
 <template>
     <div class="business-line">
-        <div class="button-group">
-            <fade-in-button @click="dialogVisible = true">新增业务线</fade-in-button>
+        <div class="button-group clearfix">
+            <fade-in-button @click="product.visible = true">新增业务线</fade-in-button>
+            <fade-in-button @click="type.visible = true">新增报表分类</fade-in-button>
+            <fade-in-button @click="dashboard.visible = true">新增报表</fade-in-button>
         </div>
         <div class="business-line-wrapper">
             <div class="type">
@@ -69,7 +71,7 @@
         </div>
         <el-dialog
                 title="提示"
-                :visible.sync="dialogVisible"
+                :visible.sync="product.visible"
                 width="35%"
                 :before-close="handleClose">
             <div class="dialog-wrapper">
@@ -78,14 +80,14 @@
                         类型
                     </form-label>
                     <el-select
-                            v-model="add.type.selected"
+                            v-model="product.add.type.selected"
                             placeholder="请选择"
                             size="small"
                             class="select"
                             slot="input"
                             @change="selectChange">
                         <el-option
-                                v-for="item in add.type.options"
+                                v-for="item in product.add.type.options"
                                 :key="item"
                                 :value="item">
                         </el-option>
@@ -95,19 +97,117 @@
                     <form-label slot="label">
                         名称
                     </form-label>
-                    <div slot="input"><el-input v-model="add.name" size="small"></el-input></div>
+                    <div slot="input"><el-input v-model="product.add.name" size="small"></el-input></div>
                 </form-label-group>
                 <form-label-group>
                     <form-label slot="label">
                         logo
                     </form-label>
-                    <div slot="input"><el-input v-model="add.logo" size="small"></el-input></div>
+                    <div slot="input"><el-input v-model="product.add.logo" size="small"></el-input></div>
                 </form-label-group>
             </div>
 
             <span slot="footer" class="dialog-footer">
-              <el-button @click="dialogVisible = false">取 消</el-button>
-              <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+              <el-button @click="product.visible = false">取 消</el-button>
+              <el-button type="primary" @click="product.visible = false">确 定</el-button>
+            </span>
+        </el-dialog>
+        <el-dialog
+                title="提示"
+                :visible.sync="type.visible"
+                width="35%"
+                :before-close="handleClose">
+            <div class="dialog-wrapper">
+                <form-label-group>
+                    <form-label slot="label">
+                        所属业务线
+                    </form-label>
+                    <el-select
+                            v-model="type.add.product.selected"
+                            placeholder="请选择"
+                            size="small"
+                            class="select"
+                            slot="input"
+                            @change="selectChange">
+                        <el-option
+                                v-for="item in type.add.product.options"
+                                :key="item"
+                                :value="item">
+                        </el-option>
+                    </el-select>
+                </form-label-group>
+                <form-label-group>
+                    <form-label slot="label">
+                        名称
+                    </form-label>
+                    <div slot="input"><el-input v-model="type.add.name" size="small"></el-input></div>
+                </form-label-group>
+            </div>
+
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="type.visible = false">取 消</el-button>
+              <el-button type="primary" @click="type.visible = false">确 定</el-button>
+            </span>
+        </el-dialog>
+        <el-dialog
+                title="提示"
+                :visible.sync="dashboard.visible"
+                width="35%"
+                :before-close="handleClose">
+            <div class="dialog-wrapper">
+                <form-label-group>
+                    <form-label slot="label">
+                        名称
+                    </form-label>
+                    <div slot="input"><el-input v-model="dashboard.add.name" size="small"></el-input></div>
+                </form-label-group>
+                <form-label-group>
+                    <form-label slot="label">
+                        数据库表名
+                    </form-label>
+                    <div slot="input"><el-input v-model="dashboard.add.table" size="small"></el-input></div>
+                </form-label-group>
+                <form-label-group>
+                    <form-label slot="label">
+                        所属业务线
+                    </form-label>
+                    <el-select
+                            v-model="dashboard.add.product.selected"
+                            placeholder="请选择"
+                            size="small"
+                            class="select"
+                            slot="input"
+                            @change="selectChange">
+                        <el-option
+                                v-for="item in dashboard.add.product.options"
+                                :key="item"
+                                :value="item">
+                        </el-option>
+                    </el-select>
+                </form-label-group>
+                <form-label-group>
+                    <form-label slot="label">
+                        所属分类
+                    </form-label>
+                    <el-select
+                            v-model="dashboard.add.type.selected"
+                            placeholder="请选择"
+                            size="small"
+                            class="select"
+                            slot="input"
+                            @change="selectChange">
+                        <el-option
+                                v-for="item in dashboard.add.type.options"
+                                :key="item"
+                                :value="item">
+                        </el-option>
+                    </el-select>
+                </form-label-group>
+            </div>
+
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="dashboard.visible = false">取 消</el-button>
+              <el-button type="primary" @click="dashboard.visible = false">确 定</el-button>
             </span>
         </el-dialog>
     </div>
@@ -129,24 +229,61 @@
         },
         data: function () {
             return {
-                dialogVisible: false,
-                add: {
-                    name: '',
-                    type: {
-                        selected: 'Android',
-                        options: [
-                            'Android',
-                            'IOS',
-                        ]
+                product: {
+                    visible: false,
+                    add: {
+                        name: '',
+                        type: {
+                            selected: 'Android',
+                            options: [
+                                'Android',
+                                'IOS',
+                            ]
+                        },
+                        logo: ''
                     },
-                    logo: ''
                 },
-
+                type: {
+                    visible: false,
+                    add: {
+                        name: '',
+                        product: {
+                            selected: '搜狗免费小说',
+                            options: [
+                                '搜狗免费小说',
+                                '搜狗阅读',
+                            ]
+                        },
+                    },
+                },
+                dashboard: {
+                    visible: false,
+                    add: {
+                        name: '',
+                        table: '',
+                        product: {
+                            selected: '搜狗免费小说',
+                            options: [
+                                '搜狗免费小说',
+                                '搜狗阅读',
+                            ]
+                        },
+                        type: {
+                            selected: '日活',
+                            options: [
+                                '日活',
+                                '30日留存',
+                            ]
+                        },
+                    },
+                }
             }
         },
         methods: {
             handleClose: function(done) {
-                this.dialogVisible=false
+                this.product.visible=false
+                this.type.visible=false
+                this.dashboard.visible=false
             },
             selectChange: function () {
 
@@ -242,5 +379,12 @@
     }
     .el-input {
         width: 300px;
+    }
+    .button-group {
+        margin-right: 350px;
+    }
+    .button-group > * {
+        float: right;
+        margin-right: 15px;
     }
 </style>
