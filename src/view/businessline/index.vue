@@ -1,11 +1,11 @@
 <template>
     <div class="business-line">
-        <div class="button-group clearfix">
-            <fade-in-button @click="product.visible = true">新增业务线</fade-in-button>
-            <fade-in-button @click="type.visible = true">新增报表分类</fade-in-button>
-            <fade-in-button @click="dashboard.visible = true">新增报表</fade-in-button>
-        </div>
         <div class="business-line-wrapper">
+            <div class="button-group clearfix">
+                <fade-in-button @click="product.visible = true">新增业务线</fade-in-button>
+                <fade-in-button @click="type.visible = true">新增报表分类</fade-in-button>
+                <fade-in-button @click="dashboard.visible = true">新增报表</fade-in-button>
+            </div>
             <div class="type">
                 <div class="type-icon">
                     <i class="iconfont">&#xe87f;</i>
@@ -317,6 +317,7 @@
         padding: 30px 20px 0 70px;
     }
     .business-line-wrapper {
+        margin: 0 auto;
         min-width: 900px;
         width: 70%;
         min-height: 700px;
@@ -381,7 +382,7 @@
         width: 300px;
     }
     .button-group {
-        margin-right: 350px;
+        margin-bottom: 30px;
     }
     .button-group > * {
         float: right;

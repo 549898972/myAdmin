@@ -17,8 +17,8 @@ const prodConfig = {
     ],
   },
   output: {
-    filename: '[name].[contenthash].js',
-    chunkFilename: "[name].[contenthash].chunk.js",
+    filename: '[name]-[contenthash].js',
+    chunkFilename: "[name]-[contenthash]-chunk.js",
   }
 }
 module.exports = merge(commonConfig, prodConfig)
