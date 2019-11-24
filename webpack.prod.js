@@ -6,7 +6,9 @@ const prodConfig = {
   mode: 'production', 
   devtool: 'cheap-module-source-map',
   plugins: [
-    new MiniCssExtractPlugin({}),
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].css',
+    }),
   ],
   optimization: {
     minimizer:[new OptimizeCSSAssetsPlugin({})]
@@ -17,8 +19,8 @@ const prodConfig = {
     ],
   },
   output: {
-    filename: '[name]-[contenthash].js',
-    chunkFilename: "[name]-[contenthash]-chunk.js",
+    filename: 'js/[name]-[contenthash].js',
+    chunkFilename: "js/[name]-[contenthash]-chunk.js",
   }
 }
 module.exports = merge(commonConfig, prodConfig)
