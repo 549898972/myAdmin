@@ -18,15 +18,18 @@ import {
     Dialog,
     Form,
     FormItem,
+    Message,
+    MessageBox,
 } from 'element-ui'
 
 import './public/css/base.css'
 import './public/css/patch.css'
 import './public/css/animate.css'
 
-
+import _ from 'lodash'
 import axios from 'axios'
 window.axios = axios
+window._ = _
 
 Vue.use(VueRouter)
 Vue.use(Icon)
@@ -42,6 +45,8 @@ Vue.use(Pagination)
 Vue.use(Dialog)
 Vue.use(Form)
 Vue.use(FormItem)
+Vue.component(Message.name, Message);
+Vue.prototype.$message = Message
 
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {

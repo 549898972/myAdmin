@@ -80,14 +80,14 @@
                         类型
                     </form-label>
                     <el-select
-                            v-model="product.add.type.selected"
+                            v-model="product.add.os.selected"
                             placeholder="请选择"
                             size="small"
                             class="select"
                             slot="input"
                             @change="selectChange">
                         <el-option
-                                v-for="item in product.add.type.options"
+                                v-for="item in product.add.os.options"
                                 :key="item"
                                 :value="item">
                         </el-option>
@@ -97,7 +97,7 @@
                     <form-label slot="label">
                         名称
                     </form-label>
-                    <div slot="input"><el-input v-model="product.add.name" size="small"></el-input></div>
+                    <div slot="input"><el-input v-model="product.add.productName" size="small"></el-input></div>
                 </form-label-group>
                 <form-label-group>
                     <form-label slot="label">
@@ -109,7 +109,7 @@
 
             <span slot="footer" class="dialog-footer">
               <el-button @click="product.visible = false">取 消</el-button>
-              <el-button type="primary" @click="product.visible = false">确 定</el-button>
+              <el-button type="primary" @click="addProduct">确 定</el-button>
             </span>
         </el-dialog>
         <el-dialog
@@ -232,8 +232,8 @@
                 product: {
                     visible: false,
                     add: {
-                        name: '',
-                        type: {
+                        productName: '',
+                        os: {
                             selected: 'Android',
                             options: [
                                 'Android',
@@ -291,7 +291,24 @@
             clickProduct: function (e) {
                 let link = '/home/dashboard/table'
                 vue.$router.push({ path: link })
-            }
+            },
+            addProduct: function () {
+                let productName = vue.product.add.productName
+                let logo = vue.product.add.logo
+                let os = vue.product.add.os.selected
+                if(_.isEmpty(productName)) {
+                    methods.warning("业务线名称不能为空！")
+                }
+            },
+            success: function (message) {
+                vue.$message({
+                    message: message,
+                    type: 'success'
+                });
+            },
+            warning: function (message) {
+                vue.$message.error(message);
+            },
         },
         mounted: function() {
             vue = this
