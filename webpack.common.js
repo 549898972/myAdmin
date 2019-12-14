@@ -15,11 +15,21 @@ module.exports = {
   entry: {
     app: ['babel-polyfill', './src/index.js']
   },
+  resolve: {
+    extensions: ['.js', '.vue', '.json'],//告诉解析器在解析路径资源中能够接受哪些扩展名（例如 .js, .jsx）
+    alias: {
+      src: path.resolve(__dirname, './src'),
+    },
+  },
   module: {
     rules: [
       {test: /\.(jpg|png|gif|bmp|jpeg)$/, use: ['url-loader?limit=20&name=images/[hash:8]-[name].[ext]']},
       {test: /\.(ttf|eot|svg|woff|woff2)$/, use: 'url-loader'},
-      {test: /\.js$/, use: 'babel-loader', exclude:/node_modules/ },
+      {
+        test: /\.js$/,
+        use: ['babel-loader', 'eslint-loader'],
+        exclude:/node_modules/
+      },
       {test: /\.vue$/, use: 'vue-loader'},
     ]
   },

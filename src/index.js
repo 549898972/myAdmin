@@ -53,7 +53,7 @@ VueRouter.prototype.push = function push(location) {
     return originalPush.call(this, location).catch(err => err)
 }
 
-var vm = new Vue({
+new Vue({
     el: '#app',
     render: c => c(app),
     router,

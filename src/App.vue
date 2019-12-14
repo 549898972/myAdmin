@@ -13,7 +13,7 @@
 </template>
 
 <script>
-    import NavHeader from './components/nav/nav-header/NavHeader.vue'
+    import NavHeader from 'src/components/nav/nav-header/NavHeader.vue'
     let vue
     export default {
         name: 'app',
