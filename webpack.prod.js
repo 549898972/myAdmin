@@ -15,7 +15,9 @@ const prodConfig = {
   },
   module: {
     rules: [
-      {test: /\.(less|css)$/, use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']}
+      {
+        test: /\.(less|css)$/, use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'],
+      }
     ],
   },
   output: {
